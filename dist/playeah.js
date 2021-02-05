@@ -63,6 +63,7 @@
                         style_html += '<style>#playeah-push .uk-offcanvas-bar .uk-close{color:'+celebration.color_copy+'!important;}'
 
                         $("#playeah-style").html(style_html);
+                        $("#playeah-push").show();
                         UIkit.offcanvas($("#playeah-push")).show();
                         break;
                     case "modal":
@@ -79,7 +80,7 @@
                             style_html += '<style>.uk-modal-dialog .uk-button-primary {background-color: '+celebration.color_cta_bg+' !important;color: '+celebration.color_cta_text+' !important;}</style>';
                         }
                         $("#playeah-style").html(style_html);
-
+                        $("#playeah-modal").show();
                         UIkit.modal($("#playeah-modal")).show();
                         break;
                     case "nudge":
@@ -167,7 +168,7 @@
 
    }
    const inject_styles = function(){
-       var style = '<style>#playeah{display:none;}.playeah-nudge-image{height:100px;width: 100px;}.playeah-modal-image{height:200px;width: 200px;margin-left: auto!important;margin-right: auto!important;}</style>';
+       var style = '<style>#playeah,#playeah-modal,#playeah-push{display:none;}.playeah-nudge-image{height:100px;width: 100px;}.playeah-modal-image{height:200px;width: 200px;margin-left: auto!important;margin-right: auto!important;}</style>';
        $("body").prepend(style);       
    }
    const find_and_play = function(progress, courseid){
@@ -207,9 +208,9 @@
                     console.log("start: "+_progress_start)
                     //mark celebrations played if progress is >0
                     for (i = 0; i < celebrations.length; i++) {
-                    if(celebrations[i].progress <= _progress_start){
-                        celebrations[i].played=true;
-                    }
+                        if(celebrations[i].progress <= _progress_start){
+                            celebrations[i].played=true;
+                        }
                     }                
                 }
                 
