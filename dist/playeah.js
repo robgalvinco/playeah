@@ -172,6 +172,12 @@
        var style = '<style>#playeah,#playeah-modal,#playeah-push{display:none;}.playeah-nudge-image{height:100px;width: 100px;}.playeah-modal-image{height:200px;width: 200px;margin-left: auto!important;margin-right: auto!important;}</style>';
        $("body").prepend(style);       
    }
+    Array.prototype.contains = function ( needle ) {
+       for (i in this) {
+           if (this[i] == needle) return true;
+       }
+       return false;
+    }   
    const find_and_play = function(progress, courseid){
        console.log(progress,courseid);
     var __allcourses_index = celebrations.findIndex(function(celebration, index) {
@@ -180,7 +186,7 @@
     });     
     console.log("all index: "+__allcourses_index);  
     var __courses_index = celebrations.findIndex(function(celebration, index) {
-        if(celebration.id == courseid && celebration.progress<=progress  && !celebration.played)
+        if(celebration.courses.contains(courseid)  && celebration.progress<=progress  && !celebration.played)
             return true;
     }); 
     console.log("course index: "+__courses_index);
@@ -231,6 +237,7 @@
 
     });
 
+        
         
     
 }());
