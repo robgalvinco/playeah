@@ -1,5 +1,6 @@
 (function () {
     var celebrations = window._playeah.celebrations;
+    console.log(celebrations);
     var _playeah_lottie = null;
     var _progress_start = -1;
     const hide_fs_lottie = function (){
