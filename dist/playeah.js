@@ -193,39 +193,40 @@
    $( document ).ready(function() {
         if(typeof(CoursePlayerV2) !== 'undefined') {
             
-                inject_styles();
-                inject_lottie();
-                inject_uikit();
-                inject_html();
-        }
+            inject_styles();
+            inject_lottie();
+            inject_uikit();
+            inject_html();
         
         
-        CoursePlayerV2.on('hooks:contentDidChange', function(data) {
-            console.log(data);
-            if(_progress_start == -1){
-                console.log("Setting default");
-                _progress_start = data.enrollment.percentage_completed*100;
-                console.log("start: "+_progress_start)
-                //mark celebrations played if progress is >0
-                for (i = 0; i < celebrations.length; i++) {
-                  if(celebrations[i].progress <= _progress_start){
-                      celebrations[i].played=true;
-                  }
-                }                
-            }
-            
-        });
+            CoursePlayerV2.on('hooks:contentDidChange', function(data) {
+                console.log(data);
+                if(_progress_start == -1){
+                    console.log("Setting default");
+                    _progress_start = data.enrollment.percentage_completed*100;
+                    console.log("start: "+_progress_start)
+                    //mark celebrations played if progress is >0
+                    for (i = 0; i < celebrations.length; i++) {
+                    if(celebrations[i].progress <= _progress_start){
+                        celebrations[i].played=true;
+                    }
+                    }                
+                }
+                
+            });
 
-        CoursePlayerV2.on('hooks:contentWasCompleted', function(data) {
-            console.log(data);
-            var progress = data.enrollment.percentage_completed*100;
-            console.log(progress)
-            find_and_play(progress,data.course.id)
-        });
-        CoursePlayerV2.on('hooks:enrollmentWasCompleted', function(data) {
-            console.log(data);
-            find_and_play(100,data.course.id)
-        });                
+            CoursePlayerV2.on('hooks:contentWasCompleted', function(data) {
+                console.log(data);
+                var progress = data.enrollment.percentage_completed*100;
+                console.log(progress)
+                find_and_play(progress,data.course.id)
+            });
+            CoursePlayerV2.on('hooks:enrollmentWasCompleted', function(data) {
+                console.log(data);
+                find_and_play(100,data.course.id)
+            });  
+        }
+
     });
 
         
