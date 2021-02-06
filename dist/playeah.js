@@ -5,9 +5,13 @@
     var _progress_start = -1;
     const hide_fs_lottie = function (){
         console.log("complete"); 
-        $("#playeah").hide();
+        $("#playeah-fs").hide();
         _playeah_lottie.removeEventListener('complete', hide_fs_lottie);
 
+    }
+    const open_url_new_tab = function(url){
+        var win = window.open(url, '_blank');
+        win.focus();        
     }
 
     const show_celebration = function(index){
@@ -15,10 +19,10 @@
         console.log(celebration);
         if(!celebration.played){
             if(celebration.type=="full"){
-                _playeah_lottie=document.querySelector("lottie-player");
+                _playeah_lottie=document.querySelector("#playeah-fs");
                 _playeah_lottie.addEventListener('complete', hide_fs_lottie);
         
-                $("#playeah").show();
+                $("#playeah-fs").show();
                 _playeah_lottie.load(celebration.lottie);
                 celebrations[index].played = true;            
             }
@@ -86,9 +90,9 @@
                         break;
                     case "nudge":
                         console.log("nudge");
-                        var style_html = "";
+                        var style_html = "<style>.uk-notification-message{border-radius:10px;}</style>";
                         if(celebration.color_bg != ""){
-                            style_html = '<style>.uk-notification-message{background-color:'+celebration.color_bg+';}</style>';
+                            style_html += '<style>.uk-notification-message{background-color:'+celebration.color_bg+';}</style>';
                         }
                         if(celebration.color_heading != ""){
                             style_html += '<style>.uk-notification-message .playeah-modal-heading{color:'+celebration.color_heading+'!important;}</style>';
@@ -97,15 +101,45 @@
                             style_html += '<style>.uk-notification-message .playeah-modal-copy{color:'+celebration.color_copy+'!important;}</style>';
                         }
                         $("#playeah-style").html(style_html);
+                        var lottie_html = '<lottie-player  src="'+celebration.lottie+'" background="transparent"  speed="1"  style="max-height: 200px;max-width:200px;margin-left:auto;margin-right:auto;"  loop  autoplay></lottie-player>';
                         //var nudge_html = '<div class="uk-flex"><span class="playeah-nudge-image">'+ lottie_html+'</span><div><h2 class="uk-text-primary">'+celebration.heading+'</h2><p>'+celebration.copy+'</p></div></div>';
-                        var nudge_html = '<span class="playeah-nudge-image">'+ lottie_html+'</span><div><h2 class="uk-text-primary uk-text-center playeah-modal-heading">'+celebration.heading+'</h2><p class="uk-text-center playeah-modal-copy">'+celebration.copy+'</p></div>';
-                        UIkit.notification(nudge_html, {pos: "bottom-right", timeout: 8000});
+                        var cta = ""
+                        if(celebration.cta_link != ""){
+                            cta = ' onclick="open_url_new_tab(\''+celebration.cta_link+'\')" '
+                        }
+                        
+                        var nudge_html = '<div class="med-container" '+cta+'>' + '<span class="playeah-nudge-image">'+ lottie_html+'</span><div><h4 class="uk-text-primary uk-text-center playeah-modal-heading">'+celebration.heading+'</h4><p class="uk-text-center playeah-modal-copy">'+celebration.copy+'</p></div></div>';
+                        UIkit.notification(nudge_html, {pos: "bottom-right", timeout: 5000});
                         break;
                     default:
                       // code block
-                }                
+                } 
+                            
                 celebrations[index].played = true;            
             }
+            if(celebration.type=="mini" ){
+                var style_html = "<style>.uk-notification-message{border-radius:10px;}.mini-container{display: flex;align-items: center;}.playeah-modal-heading{padding-left: 10px;display:inline-flex;}</style>";
+                if(celebration.color_bg != ""){
+                    style_html += '<style>.uk-notification-message{background-color:'+celebration.color_bg+';}</style>';
+                }
+                if(celebration.color_heading != ""){
+                    style_html += '<style>.uk-notification-message .playeah-modal-heading{color:'+celebration.color_heading+'!important;}</style>';
+                }
+                //if(celebration.color_copy != ""){
+                //    style_html += '<style>.uk-notification-message .playeah-modal-copy{color:'+celebration.color_copy+'!important;}</style>';
+                //}
+                $("#playeah-style").html(style_html);
+                //var nudge_html = '<div class="uk-flex"><span class="playeah-nudge-image">'+ lottie_html+'</span><div><h2 class="uk-text-primary">'+celebration.heading+'</h2><p>'+celebration.copy+'</p></div></div>';
+                //load lottie
+                var cta = ""
+                if(celebration.cta_link != ""){
+                    cta = ' onclick="open_url_new_tab(\''+celebration.cta_link+'\')" '
+                }
+                var lottie_html = '<lottie-player  src="'+celebration.lottie+'" background="transparent"  speed="1"  style="display: inline-flex; max-height: 64px;max-width:64px;"  loop  autoplay></lottie-player>';
+                var nudge_html = '<div class="mini-container" '+cta+'>' + lottie_html+'<div class="uk-text-primary uk-text-center playeah-modal-heading">'+celebration.heading+'</div></div>';
+                UIkit.notification(nudge_html, {pos: "bottom-center", timeout: 5000});
+                celebrations[index].played = true;          
+            }               
 
         }
         
@@ -159,20 +193,20 @@
 
    }    
    const inject_html= function(){
-       console.log("injecting html");
-       var html = '<div id="playeah-style"></div><lottie-player id="playeah" background="transparent" speed="1" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: 9999999999;" autoplay=""></lottie-player>';
-       var html_modal = '<div id="playeah-modal" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-margin-auto-vertical uk-modal-body"><div class="playeah-modal-image uk-flex uk-flex-center"></div> <button class="uk-modal-close-outside" type="button" uk-close></button><h2 class="uk-modal-title uk-text-center playeah-modal-heading uk-text-primary"></h2><p class="playeah-modal-copy uk-text-center uk-text-secondary"></p><p class="uk-text-center"> <a class="uk-button uk-button-primary playeah-modal-cta" ></a></p></div></div>';
-       var html_push = '<div id="playeah-push" uk-offcanvas="flip:true; mode: push; overlay: false"><div class="uk-offcanvas-bar uk-background-default"><button class="uk-offcanvas-close" type="button" uk-close></button><div class="playeah-modal-image uk-flex uk-flex-center"></div> <button class="uk-modal-close-outside" type="button" uk-close></button><h2 class="uk-modal-title uk-text-center playeah-modal-heading uk-text-primary"></h2><p class="playeah-modal-copy uk-text-center uk-text-secondary"></p><p class="uk-text-center"> <a class="uk-button uk-button-primary playeah-modal-cta" ></a></p></div></div>';
-       $("body").append(html);       
-       $("body").append(html_modal);       
-       $("body").append(html_push);       
+    console.log("injecting html");
+    var html = '<div id="playeah-style"></div><lottie-player id="playeah-fs" background="transparent" speed="1" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: 9999999999;" autoplay=""></lottie-player>';
+    var html_modal = '<div id="playeah-modal" class="uk-flex-top" uk-modal><div class="uk-modal-dialog uk-margin-auto-vertical uk-modal-body"><div class="playeah-modal-image uk-flex uk-flex-center"></div> <button class="uk-modal-close-outside" type="button" uk-close></button><h2 class="uk-modal-title uk-text-center playeah-modal-heading uk-text-primary"></h2><p class="playeah-modal-copy uk-text-center uk-text-secondary"></p><p class="uk-text-center"> <a class="uk-button uk-button-primary playeah-modal-cta" ></a></p></div></div>';
+    var html_push = '<div id="playeah-push" uk-offcanvas="flip:true; mode: push; overlay: false"><div class="uk-offcanvas-bar uk-background-default"><button class="uk-offcanvas-close" type="button" uk-close></button><div class="playeah-modal-image uk-flex uk-flex-center"></div> <button class="uk-modal-close-outside" type="button" uk-close></button><h2 class="uk-modal-title uk-text-center playeah-modal-heading uk-text-primary"></h2><p class="playeah-modal-copy uk-text-center uk-text-secondary"></p><p class="uk-text-center"> <a class="uk-button uk-button-primary playeah-modal-cta" ></a></p></div></div>';
+    $("body").append(html);       
+    $("body").append(html_modal);       
+    $("body").append(html_push);       
 
-   }
-   const inject_styles = function(){
-       var style = '<style>#playeah,#playeah-modal,#playeah-push{display:none;}.playeah-nudge-image{height:100px;width: 100px;}.playeah-modal-image{height:200px;width: 200px;margin-left: auto!important;margin-right: auto!important;}</style>';
-       $("body").prepend(style);       
-   }
-    Array.prototype.contains = function ( needle ) {
+}
+const inject_styles = function(){
+    var style = '<style>#playeah-fs{display:none;}.playeah-mini-image{height:64px;width: 64px;}.playeah-nudge-image{height:100px;width: 100px;}.playeah-modal-image{height:200px;width: 200px;margin-left: auto!important;margin-right: auto!important;}</style>';
+    $("body").prepend(style);       
+}
+ Array.prototype.contains = function ( needle ) {
        for (i in this) {
            if (this[i] == needle) return true;
        }
