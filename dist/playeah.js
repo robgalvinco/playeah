@@ -72,8 +72,10 @@
                         UIkit.offcanvas($("#playeah-push")).show();
                         break;
                     case "modal":
+                        // hide thinkific modal - conflicts
+                        style_html = "<style>.ember-modal-overlay{display:none !important}</style>";
                         if(celebration.color_bg != ""){
-                            style_html = '<style>.uk-modal-dialog{background-color:'+celebration.color_bg+';}</style>';
+                            style_html += '<style>.uk-modal-dialog{background-color:'+celebration.color_bg+';}</style>';
                         }
                         if(celebration.color_heading != ""){
                             style_html += '<style>.uk-modal-dialog .playeah-modal-heading{color:'+celebration.color_heading+'!important;}</style>';
@@ -226,6 +228,15 @@ const inject_styles = function(){
     console.log("course index: "+__courses_index);
     if(__courses_index != -1){
             show_celebration(__courses_index);
+            //make sure the "all" one with same progress does not play
+            __allcourses_index = celebrations.findIndex(function(celebration, index) {
+                if(celebration.id == "all" && celebration.progress==progress  && !celebration.played)
+                    return true;
+            }); 
+            if(__allcourses_index != -1){
+                celebrations[__allcourses_index].played=true;
+            }
+    
     }  else {
         if(__allcourses_index != -1){
             show_celebration(__allcourses_index)
