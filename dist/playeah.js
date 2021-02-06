@@ -274,10 +274,7 @@ const inject_styles = function(){
                 console.log(progress)
                 find_and_play(progress,data.course.id)
             });
-            CoursePlayerV2.on('hooks:enrollmentWasCompleted', function(data) {
-                console.log(data);
-                find_and_play(100,data.course.id)
-            });  
+             
         }
 
     });
