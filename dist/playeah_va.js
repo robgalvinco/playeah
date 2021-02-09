@@ -87,7 +87,17 @@ VideoAsk popup - v 1.0.0
         if(_index != -1){
                 show_video_ask(_index, user);
         
-        }  
+        }  else {
+            // look for default one
+            var _index = video_asks.findIndex(function(video_ask, index) {
+                if(video_ask.type=="all_complete" )
+                    return true;
+            }); 
+            console.log("course index: "+_index);
+            if(_index != -1){
+                show_video_ask(_index, user);
+            }
+        }
 }
 
  
