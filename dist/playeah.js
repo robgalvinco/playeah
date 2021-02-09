@@ -69,6 +69,7 @@
 
                         $("#playeah-style").html(style_html);
                         $("#playeah-push").show();
+                        UIkit.notification.closeAll();
                         UIkit.offcanvas($("#playeah-push")).show();
                         break;
                     case "modal":
@@ -88,11 +89,12 @@
                         }
                         $("#playeah-style").html(style_html);
                         $("#playeah-modal").show();
+                        UIkit.notification.closeAll();
                         UIkit.modal($("#playeah-modal")).show();
                         break;
                     case "nudge":
                         console.log("nudge");
-                        var style_html = "<style>.uk-notification-message{border-radius:10px;}</style>";
+                        var style_html = "<style>.uk-notification-bottom-center, .uk-notification-bottom-left, .uk-notification-bottom-right {z-index: 99999;}.uk-notification-message{border-radius:10px;}</style>";
                         if(celebration.color_bg != ""){
                             style_html += '<style>.uk-notification-message{background-color:'+celebration.color_bg+';}</style>';
                         }
@@ -111,6 +113,7 @@
                         }
                         
                         var nudge_html = '<div class="med-container" '+cta+'>' + '<span class="playeah-nudge-image">'+ lottie_html+'</span><div><h4 class="uk-text-primary uk-text-center playeah-modal-heading">'+celebration.heading+'</h4><p class="uk-text-center playeah-modal-copy">'+celebration.copy+'</p></div></div>';
+                        UIkit.notification.closeAll();
                         UIkit.notification(nudge_html, {pos: "bottom-right", timeout: 5000});
                         break;
                     default:
@@ -120,7 +123,7 @@
                 celebrations[index].played = true;            
             }
             if(celebration.type=="mini" ){
-                var style_html = "<style>.uk-notification-message{border-radius:10px;}.mini-container{display: flex;align-items: center;}.playeah-modal-heading{padding-left: 10px;display:inline-flex;}</style>";
+                var style_html = "<style>.uk-notification-bottom-center, .uk-notification-bottom-left, .uk-notification-bottom-right {z-index: 99999;}.uk-notification-message{border-radius:10px;}.mini-container{display: flex;align-items: center;}.playeah-modal-heading{padding-left: 10px;display:inline-flex;}</style>";
                 if(celebration.color_bg != ""){
                     style_html += '<style>.uk-notification-message{background-color:'+celebration.color_bg+';}</style>';
                 }
@@ -139,6 +142,7 @@
                 }
                 var lottie_html = '<lottie-player  src="'+celebration.lottie+'" background="transparent"  speed="1"  style="display: inline-flex; max-height: 64px;max-width:64px;"  loop  autoplay></lottie-player>';
                 var nudge_html = '<div class="mini-container" '+cta+'>' + lottie_html+'<div class="uk-text-primary uk-text-center playeah-modal-heading">'+celebration.heading+'</div></div>';
+                UIkit.notification.closeAll()
                 UIkit.notification(nudge_html, {pos: "bottom-center", timeout: 5000});
                 celebrations[index].played = true;          
             }               
