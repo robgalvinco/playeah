@@ -1,3 +1,7 @@
+/* plaYEAH PowerUp For Thinkific v()
+https://powerups.thinkific.com/pages/playeah
+v1.0.4
+*/
 (function () {
     var celebrations = window._playeah.celebrations;
     console.log(celebrations);
