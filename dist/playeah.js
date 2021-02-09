@@ -1,4 +1,4 @@
-/* plaYEAH PowerUp For Thinkific v()
+/* plaYEAH PowerUp For Thinkific v(v1.0.5)
 https://powerups.thinkific.com/pages/playeah
 v1.0.4
 */
