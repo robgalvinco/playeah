@@ -1,6 +1,6 @@
-/* plaYEAH PowerUp For Thinkific (v1.0.5)
+/* plaYEAH PowerUp For Thinkific (v1.0.6)
 https://powerups.thinkific.com/pages/playeah
-VideoAsk popup - v 1.0.0
+VideoAsk popup - v 1.0.1
 */
 (function () {
     var video_asks = window._playeah.va;
