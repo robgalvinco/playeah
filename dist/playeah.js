@@ -1,6 +1,6 @@
-/* plaYEAH PowerUp For Thinkific v(v1.0.6)
+/* plaYEAH PowerUp For Thinkific v(v1.0.7)
 https://powerups.thinkific.com/pages/playeah
-v1.0.4
+v1.0.7
 */
 (function () {
     var celebrations = window._playeah.celebrations;
@@ -22,6 +22,8 @@ v1.0.4
         var celebration = celebrations[index];
         console.log(celebration);
         if(!celebration.played){
+            celebration.heading = celebration.heading.replace("{{NAME}}", Thinkific.current_user.first_name);
+            celebration.copy = celebration.copy.replace("{{NAME}}", Thinkific.current_user.first_name);
             if(celebration.type=="full"){
                 _playeah_lottie=document.querySelector("#playeah-fs");
                 _playeah_lottie.addEventListener('complete', hide_fs_lottie);
