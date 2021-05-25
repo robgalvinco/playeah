@@ -55,7 +55,6 @@ VideoAsk popup - v 1.0.1
 
     }        
 
-    
 
     const init = function(){
         $( document ).ready(function() {
