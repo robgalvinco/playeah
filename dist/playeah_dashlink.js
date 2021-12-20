@@ -13,6 +13,7 @@ $( document ).ready(function() {
                 });
                 if(__FOUND != -1){
                     $(".top-bar__dashboard-link__anchor").attr("href",window._alt_dash_links[__FOUND].dash_link);
+                    $(".course-progress__dashboard-link").attr("href",window._alt_dash_links[__FOUND].dash_link);
                 } else {
                      __FOUND = window._alt_dash_links.findIndex(function(link, index) {
                         if(link.courseid == "all")
@@ -20,6 +21,7 @@ $( document ).ready(function() {
                     });
                     if(__FOUND != -1){
                         $(".top-bar__dashboard-link__anchor").attr("href",window._alt_dash_links[__FOUND].dash_link);
+                        $(".course-progress__dashboard-link").attr("href",window._alt_dash_links[__FOUND].dash_link);
                     }
                     
                 }
